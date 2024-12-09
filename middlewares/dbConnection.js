@@ -1,5 +1,4 @@
 const { Sequelize} = require('sequelize');
-const fetchSecrets = require('./fetchSecrets');
 
 let sequelize;
 async function checkConnection() {

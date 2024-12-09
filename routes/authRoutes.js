@@ -1,7 +1,6 @@
 const bcrypt =require('bcrypt');
 const crypto = require('crypto');
 const router = require('express').Router();
-const fetchSecrets = require('../middlewares/fetchSecrets');
 const jwt = require('jsonwebtoken')
 
 const { fetchDuplicates,createUser,updateReferredCount} = require('../queries/authQueries.js');
@@ -26,6 +25,8 @@ router.post('/register', async(req, res)=>{
             let user =await findReferrer(referrer);
             console.log(user[0]?.dataValues)
             user=user[0]?.dataValues;
+            if(user.reffered_count>8)
+                return res.json({success: true, message: `The referrer can not refer more candidates`}) 
             if(typeof user?.level === 'number')
             {
                 await createUser(email,encryptedPassword,name,user?.id,user?.level+1,0);

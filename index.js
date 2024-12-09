@@ -6,7 +6,6 @@ const app = express();
 require('dotenv').config();
 // Import other modules
 require("./middlewares/dbConnection");
-const fetchSecrets = require("./middlewares/fetchSecrets");
 // Serve static files before other middleware
 const serveIndex = require('serve-index');
 app.use('/ftp', express.static('public/ftp'), serveIndex('public/ftp', { icons: true }));

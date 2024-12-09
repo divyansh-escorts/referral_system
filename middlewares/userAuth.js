@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-const fetchSecrets = require('./fetchSecrets')
 const fetchModels = require('../queries/fetchModels')
 
 const checkAuth = async(req, res, next) => {

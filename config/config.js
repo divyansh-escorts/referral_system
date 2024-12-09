@@ -1,4 +1,3 @@
-// const fetchSecrets = require('../middlewares/fetchSecrets');
 async function fetchCredentials() {
   return {
     development: {
