@@ -13,7 +13,7 @@ const checkAuth = async(req, res, next) => {
     }
     // console.log(token);
     try {
-        let secrets = await fetchSecrets()
+        // let secrets = await fetchSecrets()
         const decode = jwt.verify(token, process.env.JWT_SECRET_USER)
         let user = await User.findAll({
             where:{
