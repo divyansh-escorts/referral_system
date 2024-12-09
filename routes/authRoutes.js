@@ -60,7 +60,7 @@ router.post('/login',async(req, res)=> {
         if(result) {
             // If password matches
             console.log('Login Successful');
-            let secrets = await fetchSecrets()
+            // let secrets = await fetchSecrets()
             const token = jwt.sign({
                 name: user.name,
                 email:user.email,
