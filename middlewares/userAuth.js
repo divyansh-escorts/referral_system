@@ -15,7 +15,7 @@ const checkAuth = async(req, res, next) => {
     // console.log(token);
     try {
         let secrets = await fetchSecrets()
-        const decode = jwt.verify(token, secrets.JWT_SECRET_USER)
+        const decode = jwt.verify(token, process.env.JWT_SECRET_USER)
         let user = await User.findAll({
             where:{
                 email:decode.email

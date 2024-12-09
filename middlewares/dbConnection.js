@@ -4,8 +4,8 @@ const fetchSecrets = require('./fetchSecrets');
 let sequelize;
 async function checkConnection() {
     try {
-        let secrets = await fetchSecrets()
-        sequelize = new Sequelize(secrets.URL_REF);
+        // let secrets = await fetchSecrets()
+        sequelize = new Sequelize(process.env.URL_REF);
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
       } catch (error) {

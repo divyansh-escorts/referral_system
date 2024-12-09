@@ -3,7 +3,7 @@
 // Initialize Express app
 const express = require("express");
 const app = express();
-
+require('dotenv').config();
 // Import other modules
 require("./middlewares/dbConnection");
 const fetchSecrets = require("./middlewares/fetchSecrets");
@@ -56,11 +56,7 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(3304, async () => {
-  let secrets = await fetchSecrets();
-  console.log("App listening at port " + secrets.port);
+  // let secrets = await fetchSecrets();
+  console.log("App listening at port " + process.env.port);
 });
-// var options = {
-//   key: fs.readFileSync('privatekey.pem'),
-//   cert: fs.readFileSync('certificate.pem')
-// };
-// https.createServer(options, app).listen(3302)
+
