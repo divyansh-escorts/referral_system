@@ -10,7 +10,7 @@ router.post('/setActive/:id',checkAuth,async(req, res)=> {
     console.log(`POST  /setActive/:${id} request`);
     try{
         console.log(req.userData[0].dataValues.id,id)
-        if(req.userData[0].dataValues.id!=id)
+        if(req.userData[0].dataValues.id!=id)  // if the user who is caling the API is trying to set the status of someother user.
         return res.json({success:true,message:"You are not authorised to change the status of other users"})
         if(req.userData[0].dataValues.active)
         return res.json({success:true,message:"User is already active"})  
@@ -28,7 +28,7 @@ router.post('/setInactive/:id',checkAuth,async(req, res)=> {
     const id= req.params.id;
     console.log(`POST  /setInactive/:${id} request`);
     try{
-        if(req.userData[0].dataValues.id!=id)
+        if(req.userData[0].dataValues.id!=id)   // if the user who is caling the API is trying to set the status of someother user.
         return res.json({success:true,message:"You are not authorised to change the status of other users"})
         if(!req.userData[0].dataValues.active)
         return res.json({success:false,message:"User is already Inactive"})  

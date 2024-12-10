@@ -1,14 +1,14 @@
 const fetchModels= require('./fetchModels')
 const { fn, literal, where, Sequelize, Model } = require('sequelize');
 
-async function addProfitToParent(amount,user_id,source_user_id,level) {
+async function addProfitToParent(amount,user_id,source_user_id,level) {   // adds profit to referrer's account  
     const Models = await fetchModels();
     return await Models.Earning.create({
         amount,user_id,source_user_id,level
     })
 }
 
-async function getEarningTotal(user_id) {
+async function getEarningTotal(user_id) {    // fetching the direct and indirect earning based on the level of the transaction registered.
     const Models = await fetchModels();
     const sequelize =Models.sequelize;
     const  res= await sequelize.query(`SELECT
@@ -21,7 +21,7 @@ FROM
     });
     return res;
 }
-async function getEarningTransactionsById(user_id) {
+async function getEarningTransactionsById(user_id) {  // fethceed the transaction asociated with user_id, the callers id.
     const Models = await fetchModels();
     const sequelize =Models.sequelize;
     const  res= await sequelize.query(`SELECT

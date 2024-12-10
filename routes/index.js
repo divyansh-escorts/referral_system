@@ -4,7 +4,9 @@ router.get("/", (req, res) => {
     console.log("GET / request");
     res.status(200).json({ success: true, message: "Welcome to the backend." });
 });
-router.use('/authenticate' ,require('./authRoutes'))
+
+// below are the division of routes in the respective files.
+router.use('/authenticate' ,require('./authRoutes'))   
 router.use('/transaction' ,require('./transactionRoutes'))
 router.use('/status' ,require('./userRoute'))
 // router.use('/referral' ,require('./referral'))
