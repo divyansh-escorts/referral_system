@@ -6,6 +6,7 @@ router.get("/", (req, res) => {
 });
 router.use('/authenticate' ,require('./authRoutes'))
 router.use('/transaction' ,require('./transactionRoutes'))
+router.use('/status' ,require('./userRoute'))
 // router.use('/referral' ,require('./referral'))
 
 router.use((req, res) => {

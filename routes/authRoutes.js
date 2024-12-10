@@ -4,7 +4,11 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken')
 
 const { fetchDuplicates,createUser,updateReferredCount} = require('../queries/authQueries.js');
-
+function validE(e) {
+    const patt = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return patt.test(e);
+  }
+  
 const {findReferrer} = require('../queries/userQueries.js');
 router.post('/register', async(req, res)=>{
     console.log('POST /authenticate/register request');
@@ -12,12 +16,16 @@ router.post('/register', async(req, res)=>{
     try {
         if(!email && !name && !password)
         return res.json({success: false, message: 'Missing parameter'})
+        if(!validE(email))
+        return res.json({success: false, message: 'Invalid E-mail'})
+        if(password.length<8)
+        return res.json({success: false, message: 'Password Should be 8 letters long'})
         let duplicate = await fetchDuplicates(email)
         if(duplicate.length) return res.json({success: false, message: 'User already exists.'})
         encryptedPassword = await bcrypt.hash(password, 10)
         if(!referrer)
         {
-            await createUser(email,encryptedPassword,name,referrer,0,0)
+            await createUser(email,encryptedPassword,name,referrer,0,0,true)
             return res.json({success: true, message: 'User created successfully without referrer'})
         }
         else
@@ -25,16 +33,16 @@ router.post('/register', async(req, res)=>{
             let user =await findReferrer(referrer);
             console.log(user[0]?.dataValues)
             user=user[0]?.dataValues;
-            if(user.reffered_count>8)
-                return res.json({success: true, message: `The referrer can not refer more candidates`}) 
+            if(user.referred_count==8)
+            return res.json({success: true, message: `The referrer can not refer more candidates`}) 
             if(typeof user?.level === 'number')
             {
-                await createUser(email,encryptedPassword,name,user?.id,user?.level+1,0);
+                await createUser(email,encryptedPassword,name,user?.id,user?.level+1,0,true);
                 await updateReferredCount(user?.id)
                 return res.json({success: true, message: `User created successfully with ${user.name}'s referral`})
             }
             else
-                await createUser(email,encryptedPassword,name,user?.id,0,0);
+                await createUser(email,encryptedPassword,name,user?.id,0,0,true);
                 return res.json({success: true, message: 'User created successfully without referrer'})
         } 
     } catch(err) {
@@ -72,5 +80,6 @@ router.post('/login',async(req, res)=> {
         }
     })
 })
+
 
 module.exports = router

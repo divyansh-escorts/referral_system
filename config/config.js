@@ -1,24 +1,26 @@
+require('dotenv').config();
+const {username,password,db_name,host}= process.env
 async function fetchCredentials() {
   return {
     development: {
-      username: process.env.username,
-      password: process.env.password,
-      database: process.env.db_name,
-      host: process.env.host,
+      username: username,
+      password: password,
+      database: db_name,
+      host: host,
       dialect: 'postgres',
     },
     test: {
-      username: process.env.username,
-      password: process.env.password,
-      database: process.env.db_name,
-      host: process.env.host,
+      username: username,
+      password: password,
+      database: db_name,
+      host: host,
       dialect: 'postgres',
     },
     production: {
-      username: process.env.username,
-      password: process.env.password,
-      database: process.env.db_name,
-      host: process.env.host,
+      username: username,
+      password: password,
+      database: db_name,
+      host: host,
       dialect: 'postgres',
     }
   }

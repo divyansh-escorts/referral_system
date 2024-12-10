@@ -7,10 +7,10 @@ async function fetchDuplicates(email) {
     })
 }
 
-async function createUser(email,password,name,referrer,level,referred_count) {
+async function createUser(email,password,name,referrer,level,referred_count,active) {
     const Models = await fetchModels()
     return await Models.User.create({
-        email,name,referrer_id:referrer,password,level,referred_count
+        email,name,referrer_id:referrer,password,level,referred_count,active
     })
 }
 

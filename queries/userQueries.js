@@ -12,5 +12,11 @@ async function findReferrer(referrer_id) {
         where: {id:referrer_id}
     })
 }
+async function updateUserStatus(active,id) {
+    const Models = await fetchModels()
+    return await Models.User.update({
+        active
+    },{where:{id}})
+}
 
-module.exports={checkUserParent,findReferrer};
+module.exports={checkUserParent,findReferrer,updateUserStatus};

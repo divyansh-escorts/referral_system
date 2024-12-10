@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     referrer_id: DataTypes.INTEGER,
     level: DataTypes.INTEGER,
     referred_count: DataTypes.INTEGER,
-    password:DataTypes.STRING
+    password:DataTypes.STRING,
+    active:DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'User',

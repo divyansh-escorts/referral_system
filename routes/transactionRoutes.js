@@ -14,7 +14,7 @@ router.post('/',checkAuth, async(req, res)=>{
             console.log(user);
             if(amount>=1000)
             {
-                if(user?.referrer_id)
+                if(user?.referrer_id && user.active)
                 {
 
                     await addProfitToParent((amount*5)/100,user?.referrer_id,user?.id,1);
@@ -23,9 +23,9 @@ router.post('/',checkAuth, async(req, res)=>{
                 let parent = await checkUserParent(user?.referrer_id);
                 parent=parent[0]?.dataValues;
                 console.log(parent)
-                if(parent?.referrer_id)
+                if(parent?.referrer_id && parent.active)
                 {
-                    await addProfitToParent((amount*1)/100,parent?.referrer_id,user?.id,2);
+                    await addProfitToParent((((amount*5)/100)*1)/100,parent?.referrer_id,user?.id,2);
                     console.log("Profit Transfered to grandparent")
                 }
                 await addTransaction(user.id,amount)
