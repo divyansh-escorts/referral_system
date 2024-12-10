@@ -12,20 +12,23 @@ router.post('/',checkAuth, async(req, res)=>{
             let user= req.userData;     // 
             user= user[0].dataValues;
             console.log(user);   // prints the caliing user
+            let parent1 = await checkUserParent(user?.referrer_id);
+                parent1=parent1[0]?.dataValues;
+                console.log(parent1)
             if(amount>=1000)   // the transaction continues inly when the amount is >1000
             {
-                if(user?.referrer_id && user.active)   // if the referrer is present and is active too then only proceed with the transaction
+                if(user?.referrer_id && parent1.active)   // if the referrer is present and is active too then only proceed with the transaction
                 {
 
                     await addProfitToParent((amount*5)/100,user?.referrer_id,user?.id,1);  // add 5% profit to the referrer 
                     console.log("Profit Transfered to parent");
                 }
-                let parent = await checkUserParent(user?.referrer_id);
-                parent=parent[0]?.dataValues;
-                console.log(parent)
-                if(parent?.referrer_id && parent.active)//  if the referrer's parent is present and is active too then only proceed with the transaction
+                let parent2 = await checkUserParent(parent1?.referrer_id);
+                parent2=parent2[0]?.dataValues;
+                console.log(parent2)
+                if(parent1?.referrer_id && parent2.active)//  if the referrer's parent is present and is active too then only proceed with the transaction
                 {
-                    await addProfitToParent((((amount*5)/100)*1)/100,parent?.referrer_id,user?.id,2);   // add 1% of the  profit made by referrer to the referrer's parent 
+                    await addProfitToParent((((amount*5)/100)*1)/100,parent1?.referrer_id,user?.id,2);   // add 1% of the  profit made by referrer to the referrer's parent 
                     console.log("Profit Transfered to grandparent")
                 }
                 await addTransaction(user.id,amount)   // record the transaction in seperate Transaction table
